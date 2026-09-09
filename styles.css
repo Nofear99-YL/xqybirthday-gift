@@ -64,3 +64,4 @@ button,.hold-button,.hold-button *,.moment-next,#moments{-webkit-user-select:non
 .hold-button img,.hold-button svg{pointer-events:none;-webkit-user-drag:none}
 .card-controls button{width:44px;height:44px;flex:0 0 44px;border-color:rgba(85,224,189,.38);background:rgba(4,14,12,.62);font-size:22px;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 @media(max-width:620px){.card-controls{gap:9px}.card-controls button{width:44px;height:44px;flex-basis:44px}}
+.card-stars,.card-shine,.green-sun{pointer-events:none}
