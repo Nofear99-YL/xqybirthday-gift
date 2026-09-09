@@ -48,12 +48,13 @@ const caption = document.querySelector('#ride-caption');
 let holdFrame = 0;
 let holdStart = 0;
 let completed = false;
+let touchHolding = false;
 const messages = ['坐稳。', '别怕，我在。', '前面的路都交给我。', '到了。睁开眼。'];
 let activeHoldPointer = null;
 const stopHold = event => {
-  if (event && activeHoldPointer !== null && event.pointerId !== activeHoldPointer) return;
+  if (event?.pointerId !== undefined && typeof activeHoldPointer === 'number' && event.pointerId !== activeHoldPointer) return;
   cancelAnimationFrame(holdFrame);
-  if (activeHoldPointer !== null && hold.hasPointerCapture?.(activeHoldPointer)) hold.releasePointerCapture(activeHoldPointer);
+  if (typeof activeHoldPointer === 'number' && hold.hasPointerCapture?.(activeHoldPointer)) hold.releasePointerCapture(activeHoldPointer);
   activeHoldPointer = null;
   if (!completed) {
     progress.style.strokeDashoffset = 339.3;
@@ -62,7 +63,7 @@ const stopHold = event => {
   }
 };
 const tickHold = time => {
-  const ratio = Math.min((time - holdStart) / 2800, 1);
+  const ratio = Math.min((time - holdStart) / 2000, 1);
   progress.style.strokeDashoffset = 339.3 * (1 - ratio);
   caption.textContent = messages[Math.min(Math.floor(ratio * 4), 3)];
   if (ratio >= 1) {
@@ -74,8 +75,8 @@ const tickHold = time => {
 const startHold = event => {
   event.preventDefault();
   if (activeHoldPointer !== null) return;
-  activeHoldPointer = event.pointerId;
-  hold.setPointerCapture?.(event.pointerId);
+  activeHoldPointer = event.pointerId ?? 'touch';
+  if (event.pointerId !== undefined) hold.setPointerCapture?.(event.pointerId);
   completed = false;
   holdStart = performance.now();
   document.querySelector('#ride').classList.add('racing');
@@ -84,7 +85,27 @@ const startHold = event => {
 };
 hold.addEventListener('pointerdown', startHold);
 hold.addEventListener('pointerup', stopHold);
-hold.addEventListener('pointercancel', stopHold);
+hold.addEventListener('pointercancel', event => {
+  // Android may cancel Pointer Events when its gesture recognizer wakes up.
+  // The Touch Event remains active, so do not reset until the finger lifts.
+  if (event.pointerType === 'touch' && touchHolding) return;
+  stopHold(event);
+});
+hold.addEventListener('touchstart', event => {
+  event.preventDefault();
+  touchHolding = true;
+  if (activeHoldPointer === null) startHold(event);
+}, { passive: false });
+hold.addEventListener('touchend', event => {
+  event.preventDefault();
+  touchHolding = false;
+  stopHold();
+}, { passive: false });
+hold.addEventListener('touchcancel', event => {
+  event.preventDefault();
+  touchHolding = false;
+  stopHold();
+}, { passive: false });
 hold.addEventListener('contextmenu', event => event.preventDefault());
 hold.addEventListener('selectstart', event => event.preventDefault());
 hold.addEventListener('dragstart', event => event.preventDefault());
