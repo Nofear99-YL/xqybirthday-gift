@@ -183,6 +183,7 @@ const cards = [
   ['assets/user-scene-11.jpg', '萧逸 · 凛冬追光', '“路再难走也没关系，我陪你一起闯。”'],
   ['assets/user-scene-12.jpg', '萧逸 · 午后密语', '“新的一岁，也只做让自己开心的事。”']
 ];
+cards.forEach(([src]) => { const image = new Image(); image.decoding = 'async'; image.src = src; });
 let cardIndex = 0;
 const cardElement = document.querySelector('#memory-card');
 const cardDots = document.querySelector('#card-dots');
@@ -195,9 +196,50 @@ const renderCard = index => {
   document.querySelector('.card-meta span').textContent = `生日限定 · ${String(index + 1).padStart(2, '0')} / 04`;
   [...cardDots.children].forEach((dot, i) => dot.classList.toggle('active', i === index));
 };
-cardElement.addEventListener('click', e => e.currentTarget.classList.toggle('flipped'));
-document.querySelector('#card-prev').addEventListener('click', () => { cardIndex = (cardIndex + cards.length - 1) % cards.length; renderCard(cardIndex); });
-document.querySelector('#card-next').addEventListener('click', () => { cardIndex = (cardIndex + 1) % cards.length; renderCard(cardIndex); });
+const navigateCard = direction => {
+  cardIndex = (cardIndex + direction + cards.length) % cards.length;
+  renderCard(cardIndex);
+  navigator.vibrate?.(18);
+};
+const bindCardControl = (button, direction) => {
+  let lastTouch = 0;
+  button.addEventListener('pointerup', event => {
+    if (event.pointerType === 'mouse') return;
+    event.preventDefault();
+    event.stopPropagation();
+    lastTouch = Date.now();
+    navigateCard(direction);
+  });
+  button.addEventListener('click', event => {
+    event.preventDefault();
+    event.stopPropagation();
+    if (Date.now() - lastTouch < 500) return;
+    navigateCard(direction);
+  });
+};
+bindCardControl(document.querySelector('#card-prev'), -1);
+bindCardControl(document.querySelector('#card-next'), 1);
+let cardPointerStart = null;
+let suppressCardFlip = false;
+cardElement.addEventListener('pointerdown', event => {
+  cardPointerStart = { x: event.clientX, y: event.clientY };
+});
+cardElement.addEventListener('pointerup', event => {
+  if (!cardPointerStart) return;
+  const dx = event.clientX - cardPointerStart.x;
+  const dy = event.clientY - cardPointerStart.y;
+  cardPointerStart = null;
+  if (Math.abs(dx) > 42 && Math.abs(dx) > Math.abs(dy)) {
+    suppressCardFlip = true;
+    navigateCard(dx < 0 ? 1 : -1);
+    setTimeout(() => suppressCardFlip = false, 350);
+  }
+});
+cardElement.addEventListener('pointercancel', () => { cardPointerStart = null; });
+cardElement.addEventListener('click', event => {
+  if (suppressCardFlip) return;
+  event.currentTarget.classList.toggle('flipped');
+});
 document.querySelector('#restart').addEventListener('click', () => {
   dialogueIndex = 0;
   completed = false;
