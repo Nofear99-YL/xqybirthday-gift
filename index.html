@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#06100f" />
+  <meta name="description" content="徐清宜的 9 月 9 日生日限定邀约" />
+  <title>与你赴约 · 徐清宜生日限定</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+  <main id="app">
+    <section class="scene active" id="opening" aria-labelledby="opening-title">
+      <div class="sky" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="opening-copy">
+        <p class="eyebrow">09 / 09 · LIMITED EVENT</p>
+        <h1 id="opening-title">与你赴约</h1>
+        <p class="subtitle">徐清宜生日限定活动</p>
+        <button class="primary" data-next="call">进入光夜</button>
+      </div>
+      <p class="sound-hint">建议开启声音 · 戴上耳机体验</p>
+    </section>
+
+    <section class="scene" id="call" aria-labelledby="caller-name">
+      <div class="call-glow" aria-hidden="true"></div>
+      <div class="call-ui">
+        <p class="eyebrow">INCOMING CALL</p>
+        <div class="avatar"><img src="assets/xiao-yi-official.png" alt="萧逸" /></div>
+        <h2 id="caller-name">萧逸</h2>
+        <p id="call-status">正在呼叫……</p>
+        <div class="call-actions">
+          <button class="round decline" id="wait-call" aria-label="让他再等三秒">×</button>
+          <button class="round accept" id="accept-call" aria-label="接听">⌁</button>
+        </div>
+        <div class="call-labels"><span>等三秒</span><span>接听</span></div>
+      </div>
+    </section>
+
+    <section class="scene" id="dialogue" aria-labelledby="dialogue-title">
+      <div class="city" aria-hidden="true"></div>
+      <div class="character-stage" aria-hidden="true"><div class="character-aura"></div><img src="assets/xiao-yi-official.png" alt="" /></div>
+      <div class="dialogue-box">
+        <p class="speaker">萧逸</p>
+        <p id="dialogue-title" class="line">生日还打算一个人待着？</p>
+        <button class="continue" id="dialogue-next">点击继续 <span>›</span></button>
+      </div>
+    </section>
+
+    <section class="scene" id="routes" aria-labelledby="routes-title">
+      <header class="scene-header">
+        <p class="eyebrow">TONIGHT'S DESTINATION</p>
+        <h2 id="routes-title">今晚，想去哪里？</h2>
+        <p>寿星拥有唯一决定权</p>
+      </header>
+      <div class="route-list">
+        <button class="route-card route-photo-one" data-route="追风" data-image="assets/xiao-yi-official.png" data-line="抓紧我。今晚的风，只负责把烦恼带走。">
+          <span class="route-no">01</span><span><b>追风路线</b><small>去看凌晨之前最亮的灯</small></span><em>↗</em>
+        </button>
+        <button class="route-card route-photo-two" data-route="夜色" data-image="assets/xiao-yi-sunset.jpg" data-line="这里够安静，正好让我把想说的话慢慢告诉你。">
+          <span class="route-no">02</span><span><b>夜色路线</b><small>绕开人群，去只属于我们的地方</small></span><em>↗</em>
+        </button>
+        <button class="route-card route-photo-three" data-route="秘密" data-image="assets/xiao-yi-racer.jpg" data-line="选得不错。看来你知道，跟着我不会无聊。">
+          <span class="route-no">03</span><span><b>秘密路线</b><small>不问目的地，只问你敢不敢跟上</small></span><em>↗</em>
+        </button>
+      </div>
+    </section>
+
+    <section class="scene" id="ride" aria-labelledby="ride-title">
+      <img class="ride-photo" id="ride-photo" src="assets/xiao-yi-official.png" alt="萧逸" />
+      <div class="ride-vignette" aria-hidden="true"></div>
+      <div class="speed-lines" aria-hidden="true"></div>
+      <div class="ride-copy">
+        <p class="eyebrow" id="chosen-route">ROUTE · 追风</p>
+        <h2 id="ride-title">和他一起出发</h2>
+        <p id="route-line">抓紧我。今晚的风，只负责把烦恼带走。</p>
+      </div>
+      <button class="hold-button" id="hold-button" aria-label="长按出发">
+        <svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="54"></circle><circle class="progress" cx="60" cy="60" r="54"></circle></svg>
+        <span><b>按住</b><small>一起出发</small></span>
+      </button>
+      <p class="ride-caption" id="ride-caption">长按，不要松手</p>
+    </section>
+
+    <section class="scene" id="wish" aria-labelledby="wish-title">
+      <img class="wish-photo" src="assets/xiao-yi-racer.jpg" alt="萧逸" />
+      <div class="wish-vignette" aria-hidden="true"></div>
+      <div class="moon" aria-hidden="true"></div>
+      <div class="wish-copy">
+        <p class="eyebrow">A WISH FOR QINGYI</p>
+        <h2 id="wish-title">许一个愿吧</h2>
+        <p>把不开心留在过去。<br />新的一岁，只管向喜欢的方向走。</p>
+      </div>
+      <div class="cake" aria-hidden="true"><div class="flame"></div><div class="wick"></div><div class="candle"></div><div class="cake-top"></div><div class="cake-body">09·09</div></div>
+      <button class="wind-button" id="make-wish">向上滑动 · 让风带走愿望</button>
+      <div class="swipe-zone" id="swipe-zone" aria-hidden="true"><span>↑</span></div>
+    </section>
+
+    <section class="scene" id="moments" aria-labelledby="moment-title">
+      <img class="moment-backdrop" id="moment-backdrop" src="assets/user-scene-01.jpg" alt="" aria-hidden="true" />
+      <img class="moment-photo" id="moment-photo" src="assets/user-scene-01.jpg" alt="萧逸 · 雨后相遇" />
+      <div class="moment-overlay" aria-hidden="true"></div>
+      <div class="moment-copy">
+        <p class="eyebrow" id="moment-index">CHAPTER 01 / 08</p>
+        <h2 id="moment-title">雨后相遇</h2>
+        <p id="moment-line">有些相遇像雨后的光，来得刚刚好。</p>
+      </div>
+      <button class="moment-next" id="moment-next">继续这场约会 <span>›</span></button>
+      <div class="moment-progress" id="moment-progress" aria-label="场景进度"></div>
+    </section>
+
+    <section class="scene" id="card" aria-labelledby="card-title">
+      <div class="card-stars" aria-hidden="true"></div>
+      <p class="eyebrow">BIRTHDAY LIMITED</p>
+      <div class="memory-card" id="memory-card">
+        <div class="card-front">
+          <div class="card-art"><div class="green-sun"></div><img id="card-image" src="assets/user-scene-09.jpg" alt="萧逸生日限定卡面" /><div class="card-shine"></div></div>
+          <div class="card-meta"><span>生日限定 · 01 / 04</span><b id="card-name">萧逸 · 蓝海祝愿</b><small>获得日期 09 / 09</small></div>
+        </div>
+        <div class="card-back">
+          <p>TO 徐清宜</p>
+          <h2 id="card-title">生日快乐</h2>
+          <blockquote id="card-quote">“今天的第一块蛋糕，当然要留给寿星。”</blockquote>
+          <div class="final-wish">愿你永远自由、热烈、闪闪发光。<br />喜欢的一切奔向你，期待的事情都有回应。</div>
+          <small>稀有度：只属于你　·　有效期限：永久</small>
+        </div>
+      </div>
+      <div class="card-controls"><button id="card-prev" aria-label="上一张卡">‹</button><p class="tap-hint">点击卡片翻面 · 左右切换卡面</p><button id="card-next" aria-label="下一张卡">›</button></div>
+      <div class="card-dots" id="card-dots" aria-label="卡面进度"></div>
+      <button class="ghost" id="restart">再赴约一次</button>
+      <p class="copyright-note">非官方私人生日纪念页 · 人物素材来源于《光与夜之恋》腾讯游戏官网</p>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
